@@ -32,7 +32,7 @@ module battlecards::battlecards {
         vida_ia: u8
     }
 
-    ////////////////////////////////// Eventos Simplificados //////////////////////////////////
+    ////////////////////////////////// Eventos //////////////////////////////////
     public struct EventoAccion has copy, drop {
         tipo: vector<u8>,  // la carta puede ser de "ataque" o "defensa"
         valor: u8,
@@ -43,7 +43,7 @@ module battlecards::battlecards {
     }
 
     ////////////////////////////////// Creacion de una nueva partida //////////////////////////////////
-    public entry fun nueva_partida(ctx: &mut TxContext) {
+    public fun nueva_partida(ctx: &mut TxContext) {
         let partida = Partida {
             id: object::new(ctx),
             jugador: tx_context::sender(ctx),
@@ -79,7 +79,7 @@ module battlecards::battlecards {
     }
 
     ////////////////////////////////// Seleccionar carta de ataque //////////////////////////////////
-    public entry fun carta_ataque(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
+    public fun carta_ataque(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
         let sender = tx_context::sender(ctx);
         validar_partida(partida, sender);   
 
@@ -95,7 +95,7 @@ module battlecards::battlecards {
     }
 
     ////////////////////////////////// Seleccionar carta de defensa //////////////////////////////////
-    public entry fun carta_defensa(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
+    public fun carta_defensa(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
         let sender = tx_context::sender(ctx);
         validar_partida(partida, sender);   
 
@@ -111,7 +111,7 @@ module battlecards::battlecards {
     }
 
     ////////////////////////////////// Marcar jugador como listo //////////////////////////////////
-    public entry fun jugador_listo(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
+    public fun jugador_listo(partida: &mut Partida, r: &Random, ctx: &mut TxContext) {
         let sender = tx_context::sender(ctx);
         validar_partida(partida, sender);
         assert!(option::is_some(&partida.carta_jugada), DEBES_SELECCIONAR_CARTA);
